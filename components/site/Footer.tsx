@@ -29,20 +29,20 @@ export function Footer() {
             className="grid grid-cols-2 gap-x-12 gap-y-2 text-sm"
             aria-label="Navigasi footer"
           >
-            <Link href="/faq" className="text-neutral-600 hover:text-black">
+            <Link href="/faq" className="py-1 text-neutral-600 hover:text-black">
               FAQ
             </Link>
-            <Link href="/cara-kerja" className="text-neutral-600 hover:text-black">
+            <Link href="/cara-kerja" className="py-1 text-neutral-600 hover:text-black">
               Cara Kerja
             </Link>
-            <Link href="/kontak" className="text-neutral-600 hover:text-black">
+            <Link href="/kontak" className="py-1 text-neutral-600 hover:text-black">
               Kontak
             </Link>
             {SIBLINGS.map((l) => (
               <a
                 key={l.href}
                 href={l.href}
-                className="text-neutral-600 hover:text-black"
+                className="py-1 text-neutral-600 hover:text-black"
               >
                 {l.label}
               </a>

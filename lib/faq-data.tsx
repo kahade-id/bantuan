@@ -1,5 +1,5 @@
 /**
- * Data FAQ Pusat Bantuan Kahade.
+ * Data FAQ Bantuan Kahade.
  * Sumber kebenaran: Whitepaper Kahade v1.0 (Oktober 2026).
  * Aturan bahasa: JANGAN pakai "escrow", "rekber", "ditahan", "penahanan".
  * Tombol beli: "Beli via Kahade". Bahasa: Indonesia.
@@ -28,11 +28,11 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
     items: [
       {
         q: "Bagaimana cara mendaftar akun Kahade?",
-        a: "Pendaftaran hanya membutuhkan nomor HP. Masukkan nomor HP kamu, lalu kirim pesan ke nomor WhatsApp resmi Kahade untuk menerima kode OTP. Masukkan kode tersebut dan akunmu langsung aktif. Pastikan nomor WhatsApp yang kamu pakai aktif agar kode bisa diterima.",
+        a: "Ikuti langkah ini: 1) Masukkan nomor HP aktifmu di halaman pendaftaran, 2) Kirim pesan ke nomor WhatsApp resmi Kahade seperti petunjuk di layar, 3) Masukkan kode OTP yang kamu terima via WhatsApp, 4) Akunmu langsung aktif dan siap dipakai. Seluruh proses hanya butuh waktu sekitar satu menit.",
       },
       {
         q: "Apakah pendaftaran Kahade berbayar?",
-        a: "Tidak. Membuat akun dan mulai berjualan di Kahade gratis, tanpa biaya pendaftaran dan tanpa proses verifikasi berbelit.",
+        a: "Tidak. Membuat akun dan mulai berjualan di Kahade gratis selamanya — tanpa biaya pendaftaran, tanpa biaya langganan wajib, dan tanpa proses verifikasi berbelit. Kamu baru dikenai biaya layanan 2,5% saat terjadi transaksi penjualan.",
       },
       {
         q: "Saya tidak menerima kode OTP, apa yang harus dilakukan?",
@@ -44,11 +44,11 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       },
       {
         q: "Saya lupa password, bagaimana cara masuk kembali?",
-        a: "Karena pendaftaran memakai nomor HP, kamu bisa masuk kembali dengan meminta kode OTP baru via WhatsApp ke nomor HP terdaftar. Pastikan nomor tersebut masih aktif.",
+        a: "Kahade memakai nomor HP sebagai identitas utama, jadi tidak ada password yang perlu diingat. Untuk masuk kembali: 1) Buka halaman masuk dan masukkan nomor HP terdaftarmu, 2) Kirim pesan ke nomor WhatsApp resmi Kahade, 3) Masukkan kode OTP baru yang diterima. Pastikan nomor tersebut masih aktif — jika nomor sudah tidak aktif, hubungi layanan pelanggan untuk verifikasi identitas manual.",
       },
       {
         q: "Bagaimana cara menghapus akun saya?",
-        a: "Kamu berhak meminta penghapusan akun dan datamu kapan saja. Hubungi layanan pelanggan melalui halaman Kontak — tim kami akan memverifikasi identitasmu lalu memproses penghapusan sesuai ketentuan yang berlaku.",
+        a: "Kamu berhak meminta penghapusan akun dan datamu kapan saja. Caranya: 1) Hubungi layanan pelanggan melalui halaman Kontak, 2) Sebutkan bahwa kamu ingin menghapus akun beserta nomor HP terdaftar, 3) Tim kami memverifikasi identitasmu, 4) Data dihapus sesuai ketentuan yang berlaku. Saldo atau transaksi yang masih berjalan harus diselesaikan dulu sebelum akun dihapus.",
       },
     ],
   },
@@ -63,7 +63,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       },
       {
         q: "Bagaimana cara mulai berjualan di Kahade?",
-        a: "Semudah membuat postingan media sosial: buat etalase (nama, foto, deskripsi singkat), lalu posting barang atau jasamu dengan foto/video, harga, dan deskripsi. Tidak ada biaya pendaftaran dan tidak ada verifikasi berbelit untuk mulai berjualan. Verifikasi identitas baru diminta saat penarikan dana pertama — demi keamanan semua pihak.",
+        a: "Semudah membuat postingan media sosial: 1) Buat etalase tokomu (nama, foto, deskripsi singkat), 2) Posting barang atau jasamu lengkap dengan foto/video, harga, dan deskripsi jujur, 3) Tanggapi chat calon pembeli dengan cepat, 4) Kemas dan kirim barang setelah ada pesanan berbayar. Tidak ada biaya pendaftaran dan tidak ada verifikasi berbelit untuk mulai berjualan. Verifikasi identitas baru diminta saat penarikan dana pertama — demi keamanan semua pihak.",
       },
       {
         q: "Apa saja yang bisa dijual di Kahade?",
@@ -75,7 +75,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       },
       {
         q: "Bagaimana cara kerja Jastip (Jasa Titip)?",
-        a: "Penyedia jastip membuat \"trip\" — misalnya \"Jastip Jepang, 10–17 Desember\". Kamu menitipkan barang yang diinginkan beserta budget, penyedia membeli barang dan mengunggah bukti pembelian, lalu barang dikirim kepadamu setelah tiba.",
+        a: "Langkahnya: 1) Penyedia jastip membuat \"trip\" — misalnya \"Jastip Jepang, 10–17 Desember\" lengkap dengan fee jasanya, 2) Kamu menitipkan barang yang diinginkan beserta budget maksimal, 3) Penyedia membeli barang dan mengunggah bukti pembelian (nota/foto), 4) Barang dikirim kepadamu setelah tiba, 5) Konfirmasi penerimaan agar dana diteruskan ke penyedia. Semua pembayaran tetap via Kahade, bukan transfer langsung.",
       },
       {
         q: "Bagaimana sistem ulasan dan reputasi bekerja?",
@@ -94,7 +94,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       },
       {
         q: "Metode pembayaran apa saja yang tersedia?",
-        a: "Pembayaran dilakukan via Kahade dengan DANA. Pilih metode pembayaranmu saat menekan \"Beli via Kahade\" dan selesaikan dalam hitungan detik.",
+        a: "Pembayaran dilakukan via Kahade dengan DANA. Caranya: 1) Tekan tombol \"Beli via Kahade\" di barang yang kamu mau, 2) Periksa rincian harga + biaya layanan 2,5% yang tampil transparan, 3) Pilih DANA sebagai metode pembayaran, 4) Selesaikan pembayaran dalam hitungan detik. Kamu tidak perlu transfer manual ke penjual — semua tercatat otomatis di aplikasi.",
       },
       {
         q: "Kapan penjual menerima dana?",
@@ -106,7 +106,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       },
       {
         q: "Bagaimana cara menarik dana ke rekening saya?",
-        a: "Buka menu penarikan di aplikasi dan ikuti langkahnya. Pada penarikan pertama, kamu akan diminta verifikasi identitas — ini wajib demi keamanan dan hanya dilakukan sekali.",
+        a: "Langkahnya: 1) Buka menu penarikan/saldo di aplikasi, 2) Masukkan nominal dan pilih rekening tujuan, 3) Pada penarikan pertama, selesaikan verifikasi identitas (KTP + swafoto) — wajib demi keamanan dan hanya dilakukan sekali, 4) Konfirmasi dengan PIN. Dana diproses sesuai estimasi waktu yang tampil di aplikasi.",
       },
       {
         q: "Apakah ada biaya untuk menarik dana?",
@@ -125,7 +125,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       },
       {
         q: "Apa yang harus dilakukan jika terjadi sengketa?",
-        a: "Ajukan sengketa dari detail transaksimu dan sertakan bukti: screenshot chat, foto barang, dan resi pengiriman. Tim Trust & Safety Kahade akan meninjau bukti kedua belah pihak dan memberikan keputusan yang adil dan transparan.",
+        a: "Jangan konfirmasi penerimaan barang dulu. Lalu: 1) Buka detail transaksi dan pilih \"Ajukan Sengketa\", 2) Pilih alasan (barang tidak sampai / tidak sesuai deskripsi / rusak), 3) Lampirkan bukti: screenshot chat, foto barang yang diterima, dan resi pengiriman, 4) Tim Trust & Safety Kahade meninjau bukti kedua belah pihak dan memberikan keputusan yang adil dan transparan. Selama sengketa berjalan, dana tidak diteruskan ke siapa pun.",
       },
       {
         q: "Bagaimana cara mengenali penjual yang terpercaya?",
@@ -133,7 +133,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       },
       {
         q: "Bagaimana cara melaporkan penipuan atau akun mencurigakan?",
-        a: "Laporkan langsung dari profil atau postingan yang bersangkutan lewat tombol lapor, atau hubungi layanan pelanggan melalui halaman Kontak dengan menyertakan bukti (screenshot chat, bukti pembayaran). Setiap laporan kami tindaklanjuti.",
+        a: "Dua cara: 1) Langsung dari aplikasi — buka profil atau postingan yang bersangkutan lalu tekan tombol lapor, 2) Via halaman Kontak — sertakan username/nomor HP terlapor, kronologi kejadian, screenshot chat, dan bukti pembayaran. Setiap laporan kami tindaklanjuti; laporan penipuan diprioritaskan. Jangan pernah membalas pesan pelaku atau mengirim uang tambahan setelah melapor.",
       },
       {
         q: "Apakah data pribadi saya aman di Kahade?",

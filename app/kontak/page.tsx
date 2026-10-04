@@ -60,6 +60,34 @@ export default function KontakPage() {
           silakan hubungi kami via email di atas.
         </span>
       </Alert>
+
+      <Card className="mt-6 p-5">
+        <h2 className="text-[15px] font-bold text-black">
+          Agar laporanmu cepat diproses, sertakan:
+        </h2>
+        <ul className="mt-3 space-y-2 text-sm leading-relaxed text-neutral-600">
+          <li className="flex gap-2">
+            <span className="font-bold text-black">1.</span>
+            Username atau nomor HP terdaftar di akunmu.
+          </li>
+          <li className="flex gap-2">
+            <span className="font-bold text-black">2.</span>
+            Waktu kejadian (tanggal dan jam, bila ingat).
+          </li>
+          <li className="flex gap-2">
+            <span className="font-bold text-black">3.</span>
+            Screenshot chat, bukti pembayaran, atau foto barang terkait.
+          </li>
+          <li className="flex gap-2">
+            <span className="font-bold text-black">4.</span>
+            ID transaksi (ada di detail transaksi di aplikasi).
+          </li>
+          <li className="flex gap-2">
+            <span className="font-bold text-black">5.</span>
+            Kronologi singkat: apa yang terjadi, langkah demi langkah.
+          </li>
+        </ul>
+      </Card>
     </div>
   );
 }
