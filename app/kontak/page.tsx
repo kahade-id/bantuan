@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { EnvelopeSimple, Clock, ChatCircleDots } from "@phosphor-icons/react/dist/ssr";
 import { Icon, Card, Alert } from "@kahade/ui";
+import { IconTile } from "@/components/site/IconTile";
 
 export const metadata: Metadata = {
   title: "Hubungi Kami",
@@ -21,9 +22,7 @@ export default function KontakPage() {
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2">
         <Card className="p-5">
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-neutral-100">
-            <Icon icon={EnvelopeSimple} size={20} className="text-black" />
-          </span>
+          <IconTile icon={EnvelopeSimple} />
           <h2 className="mt-4 text-[15px] font-bold text-black">Email</h2>
           <a
             href="mailto:halo@kahade.id"
@@ -36,9 +35,7 @@ export default function KontakPage() {
           </p>
         </Card>
         <Card className="p-5">
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-neutral-100">
-            <Icon icon={Clock} size={20} className="text-black" />
-          </span>
+          <IconTile icon={Clock} />
           <h2 className="mt-4 text-[15px] font-bold text-black">
             Jam operasional
           </h2>

@@ -12,6 +12,7 @@ import {
   ArrowRight,
 } from "@phosphor-icons/react/dist/ssr";
 import { Icon, Card, SearchField } from "@kahade/ui";
+import { IconTile } from "@/components/site/IconTile";
 import { FAQ_CATEGORIES, POPULAR_FAQS } from "@/lib/faq-data";
 
 const CATEGORY_ICONS = [
@@ -114,6 +115,10 @@ export default function HomePage() {
                 setQuery(e.target.value);
                 setActiveIndex(-1);
               }}
+              onClear={() => {
+                setQuery("");
+                setActiveIndex(-1);
+              }}
               onKeyDown={onSearchKeyDown}
               aria-label="Cari bantuan"
               aria-expanded={showResults}
@@ -132,14 +137,12 @@ export default function HomePage() {
               >                {results.length > 0 ? (
                   <ul ref={listRef}>
                     {results.map((r, idx) => (
-                      <li
-                        key={`${r.href}-${r.q}`}
-                        id={`hasil-${idx}`}
-                        role="option"
-                        aria-selected={idx === activeIndex}
-                      >
+                      <li key={`${r.href}-${r.q}`}>
                         <Link
                           href={r.href}
+                          id={`hasil-${idx}`}
+                          role="option"
+                          aria-selected={idx === activeIndex}
                           onMouseEnter={() => setActiveIndex(idx)}
                           className={`flex items-center justify-between gap-3 px-4 py-3 text-sm font-medium text-black transition-colors hover:bg-neutral-50 ${
                             idx === activeIndex ? "bg-neutral-100" : ""
@@ -188,13 +191,7 @@ export default function HomePage() {
           {FAQ_CATEGORIES.map((cat, i) => (
             <Link key={cat.slug} href={`/faq#${cat.slug}`}>
               <Card interactive className="h-full p-5">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-neutral-100">
-                  <Icon
-                    icon={CATEGORY_ICONS[i % CATEGORY_ICONS.length]}
-                    size={20}
-                    className="text-black"
-                  />
-                </span>
+                <IconTile icon={CATEGORY_ICONS[i % CATEGORY_ICONS.length]} />
                 <h3 className="mt-4 text-[15px] font-bold text-black">
                   {cat.title}
                 </h3>
@@ -210,9 +207,7 @@ export default function HomePage() {
           ))}
           <Link href="/cara-kerja">
             <Card interactive className="h-full p-5">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-black">
-                <Icon icon={ArrowRight} size={20} className="text-white" />
-              </span>
+              <IconTile icon={ArrowRight} dark />
               <h3 className="mt-4 text-[15px] font-bold text-black">
                 Cara Kerja
               </h3>

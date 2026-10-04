@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Accordion } from "@kahade/ui";
+import { Accordion, Card } from "@kahade/ui";
 import { FAQ_CATEGORIES } from "@/lib/faq-data";
 import { faqPageJsonLd } from "@/lib/faq-schema";
 
@@ -36,7 +36,7 @@ export default function FaqPage() {
             {cat.title}
           </h2>
           <p className="mt-1 text-sm text-neutral-500">{cat.description}</p>
-          <div className="mt-4 rounded-2xl border border-neutral-200 bg-white px-5">
+          <Card className="mt-4 px-5 py-2">
             <Accordion
               items={cat.items.map((item, i) => ({
                 id: `${cat.slug}-${i}`,
@@ -47,8 +47,9 @@ export default function FaqPage() {
                   </p>
                 ),
               }))}
-            />
-          </div>
+            >
+            </Accordion>
+          </Card>
         </section>
       ))}
     </div>

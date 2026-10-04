@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { UsersThree, AirplaneTilt } from "@phosphor-icons/react/dist/ssr";
-import { Icon, Card, Steps, Alert } from "@kahade/ui";
+import { Card, Steps, Alert } from "@kahade/ui";
+import { IconTile } from "@/components/site/IconTile";
 
 export const metadata: Metadata = {
   title: {
@@ -54,9 +55,9 @@ export default function CaraKerjaPage() {
         seperti media sosial. Berikut alur jual-belinya:
       </p>
 
-      <div className="mt-8 rounded-2xl border border-neutral-200 bg-white p-6">
+      <Card className="mt-8">
         <Steps steps={STEPS} current={STEPS.length} />
-      </div>
+      </Card>
 
       <Alert variant="info" className="mt-6">
         Prinsipnya sederhana: &ldquo;Beli via Kahade&rdquo; berarti aman. Dana
@@ -68,9 +69,7 @@ export default function CaraKerjaPage() {
       </h2>
       <div className="mt-4 grid gap-4 sm:grid-cols-2">
         <Card className="p-5">
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-neutral-100">
-            <Icon icon={UsersThree} size={20} className="text-black" />
-          </span>
+          <IconTile icon={UsersThree} />
           <h3 className="mt-4 text-[15px] font-bold text-black">Patungan</h3>
           <p className="mt-1 text-sm leading-relaxed text-neutral-500">
             Pembelian bersama: buat grup patungan, undang teman, masing-masing
@@ -78,9 +77,7 @@ export default function CaraKerjaPage() {
           </p>
         </Card>
         <Card className="p-5">
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-neutral-100">
-            <Icon icon={AirplaneTilt} size={20} className="text-black" />
-          </span>
+          <IconTile icon={AirplaneTilt} />
           <h3 className="mt-4 text-[15px] font-bold text-black">Jastip</h3>
           <p className="mt-1 text-sm leading-relaxed text-neutral-500">
             Jasa titip-beli: penyedia membuat &ldquo;trip&rdquo;, kamu menitipkan
