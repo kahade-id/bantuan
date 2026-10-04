@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
@@ -17,7 +17,6 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.svg",
   },
-  themeColor: "#ffffff",
   openGraph: {
     type: "website",
     locale: "id_ID",
@@ -26,6 +25,10 @@ export const metadata: Metadata = {
     description:
       "FAQ, cara kerja jual-beli, biaya, keamanan, dan kontak layanan pelanggan Kahade.",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#ffffff",
 };
 
 export default function RootLayout({

@@ -7,7 +7,7 @@
     "react-dom": "^19.3.0",
     "tailwindcss": "^4.3.3"
   },
-  "description": "Pusat bantuan Kahade \u2014 bantuan.kahade.id",
+  "description": "Pusat bantuan Kahade — bantuan.kahade.id",
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^22.0.0",

@@ -1,8 +1,13 @@
-"use client";
-
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Accordion } from "@kahade/ui";
 import { FAQ_CATEGORIES } from "@/lib/faq-data";
+
+export const metadata: Metadata = {
+  title: "FAQ",
+  description:
+    "Jawaban atas pertanyaan yang paling sering ditanyakan tentang Kahade: akun, jual beli, pembayaran, keamanan, dan Kahade Plus.",
+};
 
 export default function FaqPage() {
   return (
