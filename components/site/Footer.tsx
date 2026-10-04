@@ -1,7 +1,17 @@
 import Link from "next/link";
 import { Logo } from "@kahade/ui";
 
+const SIBLINGS = [
+  { label: "kahade.id", href: "https://kahade.id" },
+  { label: "Karir", href: "https://karir.kahade.id" },
+  { label: "Legalitas", href: "https://legal.kahade.id" },
+  { label: "Status Layanan", href: "https://status.kahade.id" },
+  { label: "Investor", href: "https://investor.kahade.id" },
+  { label: "Artikel", href: "https://artikel.kahade.id" },
+];
+
 export function Footer() {
+  const year = new Date().getFullYear();
   return (
     <footer className="border-t border-neutral-200 bg-white">
       <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
@@ -28,17 +38,20 @@ export function Footer() {
             <Link href="/kontak" className="text-neutral-600 hover:text-black">
               Kontak
             </Link>
-            <a
-              href="https://karir.kahade.id"
-              className="text-neutral-600 hover:text-black"
-            >
-              Karier
-            </a>
+            {SIBLINGS.map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                className="text-neutral-600 hover:text-black"
+              >
+                {l.label}
+              </a>
+            ))}
           </nav>
         </div>
         <div className="mt-8 border-t border-neutral-100 pt-6">
           <p className="text-xs text-neutral-400">
-            © 2026 PT Kawal Hak Dengan Aman. Hak cipta dilindungi.
+            © {year} PT Kawal Hak Dengan Aman. Hak cipta dilindungi.
           </p>
         </div>
       </div>
