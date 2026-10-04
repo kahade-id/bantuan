@@ -137,7 +137,7 @@ export function FaqSearch() {
               ))}
             </ul>
           ) : (
-            <div className="px-4 py-4 text-sm text-neutral-500">
+            <div role="status" className="px-4 py-4 text-sm text-neutral-500">
               <p className="font-medium text-black">
                 Tidak ada hasil untuk &ldquo;{query.trim()}&rdquo;.
               </p>

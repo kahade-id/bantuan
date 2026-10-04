@@ -49,8 +49,16 @@ export default function RootLayout({
         <link href={GOOGLE_FONTS_URL} rel="stylesheet" />
       </head>
       <body>
+        <a
+          href="#konten-utama"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-black focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+        >
+          Lewati ke konten utama
+        </a>
         <Header />
-        <main className="min-h-[60vh]">{children}</main>
+        <main id="konten-utama" className="min-h-[60vh]">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>
