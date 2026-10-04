@@ -29,20 +29,20 @@ export function Footer() {
             className="grid grid-cols-2 gap-x-12 gap-y-2 text-sm"
             aria-label="Navigasi footer"
           >
-            <Link href="/faq" className="rounded py-1 text-neutral-600 transition-colors hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900">
+            <Link href="/faq" className="inline-flex min-h-[44px] items-center rounded text-neutral-600 transition-colors hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900">
               FAQ
             </Link>
-            <Link href="/cara-kerja" className="rounded py-1 text-neutral-600 transition-colors hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900">
+            <Link href="/cara-kerja" className="inline-flex min-h-[44px] items-center rounded text-neutral-600 transition-colors hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900">
               Cara Kerja
             </Link>
-            <Link href="/kontak" className="rounded py-1 text-neutral-600 transition-colors hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900">
+            <Link href="/kontak" className="inline-flex min-h-[44px] items-center rounded text-neutral-600 transition-colors hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900">
               Kontak
             </Link>
             {SIBLINGS.map((l) => (
               <a
                 key={l.href}
                 href={l.href}
-                className="rounded py-1 text-neutral-600 transition-colors hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900"
+                className="inline-flex min-h-[44px] items-center rounded text-neutral-600 transition-colors hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900"
               >
                 {l.label}
               </a>

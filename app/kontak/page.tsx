@@ -26,7 +26,7 @@ export default function KontakPage() {
           <h2 className="mt-4 text-[15px] font-bold text-black">Email</h2>
           <a
             href="mailto:halo@kahade.id"
-            className="mt-1 block text-sm font-semibold text-black underline"
+            className="mt-1 inline-flex min-h-[44px] items-center text-sm font-semibold text-black underline"
           >
             halo@kahade.id
           </a>
