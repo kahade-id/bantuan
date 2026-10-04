@@ -1,6 +1,5 @@
 import { MagnifyingGlass } from "@phosphor-icons/react/dist/ssr";
-import { EmptyState, Logo } from "@kahade/ui";
-import ButtonLink from "@/components/site/ButtonLink";
+import { ButtonLink, EmptyState, Logo } from "@kahade/ui";
 
 export default function NotFound() {
   return (
