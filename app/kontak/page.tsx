@@ -9,6 +9,12 @@ export const metadata: Metadata = {
   description:
     "Hubungi layanan pelanggan Kahade via email. Respons maksimal 1×24 jam kerja, Senin–Jumat 09.00–17.00 WIB.",
   alternates: { canonical: "https://bantuan.kahade.id/kontak" },
+  openGraph: {
+    title: "Hubungi Kami — Bantuan Kahade",
+    description:
+      "Hubungi layanan pelanggan Kahade via email. Respons maksimal 1×24 jam kerja, Senin–Jumat 09.00–17.00 WIB.",
+    url: "https://bantuan.kahade.id/kontak",
+  },
 };
 
 export default function KontakPage() {

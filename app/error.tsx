@@ -15,6 +15,7 @@ export default function Error({
   return (
     <div className="mx-auto w-full max-w-5xl px-5 py-16">
       <EmptyState
+        headingLevel={1}
         icon={WarningCircle}
         title="Terjadi kesalahan"
         description="Maaf, halaman ini gagal dimuat. Coba muat ulang — kalau masih gagal, hubungi kami via halaman Kontak."
