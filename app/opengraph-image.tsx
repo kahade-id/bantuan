@@ -46,7 +46,7 @@ export default function OgImage() {
         <div style={{ marginTop: "24px", fontSize: "28px", color: "#525252" }}>
           FAQ, cara kerja, dan kontak layanan pelanggan.
         </div>
-        <div style={{ marginTop: "12px", fontSize: "24px", color: "#a3a3a3" }}>
+        <div style={{ marginTop: "12px", fontSize: "24px", color: "#737373" }}>
           bantuan.kahade.id
         </div>
       </div>

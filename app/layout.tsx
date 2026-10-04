@@ -14,6 +14,7 @@ export const metadata: Metadata = {
   description:
     "Panduan jual beli aman di Kahade: FAQ, cara kerja, biaya transaksi 2,5%, keamanan, Kahade Plus, dan kontak layanan pelanggan.",
   metadataBase: new URL("https://bantuan.kahade.id"),
+  alternates: { canonical: "https://bantuan.kahade.id/" },
   icons: {
     icon: "/favicon.svg",
   },

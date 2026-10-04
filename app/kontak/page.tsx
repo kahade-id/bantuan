@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import { EnvelopeSimple, Clock, ChatCircleDots } from "@phosphor-icons/react/dist/ssr";
 import { Icon, Card, Alert } from "@kahade/ui";
 import { IconTile } from "@/components/site/IconTile";
+import { ContactForm } from "@/components/site/ContactForm";
 
 export const metadata: Metadata = {
   title: "Hubungi Kami",
   description:
     "Hubungi layanan pelanggan Kahade via email. Respons maksimal 1×24 jam kerja, Senin–Jumat 09.00–17.00 WIB.",
+  alternates: { canonical: "https://bantuan.kahade.id/kontak" },
 };
 
 export default function KontakPage() {
@@ -58,6 +60,17 @@ export default function KontakPage() {
           silakan hubungi kami via email di atas.
         </span>
       </Alert>
+
+      <Card className="mt-6 p-5 sm:p-6">
+        <h2 className="text-[15px] font-bold text-black">Kirim pesan</h2>
+        <p className="mt-1 text-sm text-neutral-500">
+          Isi formulir di bawah — pesanmu akan diteruskan ke email layanan
+          pelanggan.
+        </p>
+        <div className="mt-4">
+          <ContactForm />
+        </div>
+      </Card>
 
       <Card className="mt-6 p-5">
         <h2 className="text-[15px] font-bold text-black">

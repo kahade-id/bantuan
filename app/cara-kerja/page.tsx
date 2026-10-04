@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   },
   description:
     "Pelajari cara kerja jual beli di Kahade langkah demi langkah: dari feed, chat penjual, Beli via Kahade, hingga patungan dan jastip.",
+  alternates: { canonical: "https://bantuan.kahade.id/cara-kerja" },
 };
 
 const STEPS = [

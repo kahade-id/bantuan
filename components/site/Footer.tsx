@@ -50,7 +50,7 @@ export function Footer() {
           </nav>
         </div>
         <div className="mt-8 border-t border-neutral-100 pt-6">
-          <p className="text-xs text-neutral-400">
+          <p className="text-xs text-neutral-500">
             © {year} PT Kawal Hak Dengan Aman. Hak cipta dilindungi.
           </p>
         </div>

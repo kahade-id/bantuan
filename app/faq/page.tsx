@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "FAQ Jual Beli Aman",
   description:
     "Jawaban pertanyaan seputar jual beli aman di Kahade: akun, biaya 2,5%, pembayaran, keamanan, patungan, jastip, dan Kahade Plus.",
+  alternates: { canonical: "https://bantuan.kahade.id/faq" },
 };
 
 export default function FaqPage() {
