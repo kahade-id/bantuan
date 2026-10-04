@@ -1,0 +1,7 @@
+@import "tailwindcss";
+@import "@kahade/ui/tokens.css";
+@import "@kahade/ui/styles/base.css";
+
+html {
+  scroll-behavior: smooth;
+}
