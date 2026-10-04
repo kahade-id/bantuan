@@ -8,11 +8,11 @@ const GOOGLE_FONTS_URL =
 
 export const metadata: Metadata = {
   title: {
-    default: "Bantuan Kahade",
+    default: "Bantuan Kahade — Panduan Jual Beli Aman",
     template: "%s — Bantuan Kahade",
   },
   description:
-    "Bantuan Kahade: FAQ, cara kerja jual-beli, biaya, keamanan, dan kontak layanan pelanggan.",
+    "Panduan jual beli aman di Kahade: FAQ, cara kerja, biaya transaksi 2,5%, keamanan, Kahade Plus, dan kontak layanan pelanggan.",
   metadataBase: new URL("https://bantuan.kahade.id"),
   icons: {
     icon: "/favicon.svg",
@@ -21,9 +21,9 @@ export const metadata: Metadata = {
     type: "website",
     locale: "id_ID",
     siteName: "Bantuan Kahade",
-    title: "Bantuan Kahade",
+    title: "Bantuan Kahade — Panduan Jual Beli Aman",
     description:
-      "FAQ, cara kerja jual-beli, biaya, keamanan, dan kontak layanan pelanggan Kahade.",
+      "Panduan jual beli aman di Kahade: FAQ, cara kerja, biaya transaksi 2,5%, keamanan, Kahade Plus, dan kontak layanan pelanggan.",
   },
 };
 

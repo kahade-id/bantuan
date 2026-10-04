@@ -3,9 +3,11 @@ import { UsersThree, AirplaneTilt } from "@phosphor-icons/react/dist/ssr";
 import { Icon, Card, Steps, Alert } from "@kahade/ui";
 
 export const metadata: Metadata = {
-  title: "Cara Kerja",
+  title: {
+    absolute: "Cara Kerja Kahade — Jual Beli Aman Seperti Media Sosial",
+  },
   description:
-    "Cara kerja jual-beli di Kahade langkah demi langkah, termasuk Patungan dan Jastip.",
+    "Pelajari cara kerja jual beli di Kahade langkah demi langkah: dari feed, chat penjual, Beli via Kahade, hingga patungan dan jastip.",
 };
 
 const STEPS = [
@@ -45,7 +47,7 @@ export default function CaraKerjaPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
       <h1 className="text-3xl font-extrabold tracking-tight text-black">
-        Cara Kerja Kahade
+        Cara Kerja Jual Beli Aman di Kahade
       </h1>
       <p className="mt-3 text-[15px] leading-relaxed text-neutral-500">
         Kahade adalah aplikasi jual-beli pengguna ke pengguna yang tampilannya

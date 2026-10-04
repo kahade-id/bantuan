@@ -3,15 +3,16 @@ import { EnvelopeSimple, Clock, ChatCircleDots } from "@phosphor-icons/react/dis
 import { Icon, Card, Alert } from "@kahade/ui";
 
 export const metadata: Metadata = {
-  title: "Kontak",
-  description: "Hubungi layanan pelanggan Kahade.",
+  title: "Hubungi Kami",
+  description:
+    "Hubungi layanan pelanggan Kahade via email. Respons maksimal 1×24 jam kerja, Senin–Jumat 09.00–17.00 WIB.",
 };
 
 export default function KontakPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
       <h1 className="text-3xl font-extrabold tracking-tight text-black">
-        Hubungi Kami
+        Hubungi Layanan Pelanggan Kahade
       </h1>
       <p className="mt-3 text-[15px] leading-relaxed text-neutral-500">
         Tim layanan pelanggan Kahade siap membantu pada jam operasional di

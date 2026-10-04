@@ -2,18 +2,24 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Accordion } from "@kahade/ui";
 import { FAQ_CATEGORIES } from "@/lib/faq-data";
+import { faqPageJsonLd } from "@/lib/faq-schema";
 
 export const metadata: Metadata = {
-  title: "FAQ",
+  title: "FAQ Jual Beli Aman",
   description:
-    "Jawaban atas pertanyaan yang paling sering ditanyakan tentang Kahade: akun, jual beli, pembayaran, keamanan, dan Kahade Plus.",
+    "Jawaban pertanyaan seputar jual beli aman di Kahade: akun, biaya 2,5%, pembayaran, keamanan, patungan, jastip, dan Kahade Plus.",
 };
 
 export default function FaqPage() {
+  const jsonLd = JSON.stringify(faqPageJsonLd()).replace(/</g, "\\u003c");
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd }}
+      />
       <h1 className="text-3xl font-extrabold tracking-tight text-black">
-        Pertanyaan Umum
+        FAQ Jual Beli Aman
       </h1>
       <p className="mt-3 text-[15px] leading-relaxed text-neutral-500">
         Jawaban atas pertanyaan yang paling sering ditanyakan pengguna Kahade.

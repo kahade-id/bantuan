@@ -100,11 +100,11 @@ export default function HomePage() {
       <section className="border-b border-neutral-200 bg-white">
         <div className="mx-auto max-w-3xl px-4 py-14 text-center sm:px-6 sm:py-20">
           <h1 className="text-3xl font-extrabold tracking-tight text-black sm:text-4xl">
-            Ada yang bisa kami bantu?
+            Bantuan Jual Beli Aman di Kahade
           </h1>
           <p className="mx-auto mt-3 max-w-xl text-[15px] leading-relaxed text-neutral-500">
-            Temukan jawaban seputar akun, jual-beli, pembayaran, keamanan, dan
-            Kahade Plus.
+            Ada yang bisa kami bantu? Temukan jawaban seputar akun, jual-beli,
+            pembayaran, keamanan, dan Kahade Plus.
           </p>
           <div className="relative mx-auto mt-8 max-w-xl text-left">
             <SearchField
