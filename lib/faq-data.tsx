@@ -5,9 +5,12 @@
  * Tombol beli: "Beli via Kahade". Bahasa: Indonesia.
  */
 
+import type { ReactNode } from "react";
+
 export interface FaqItem {
   q: string;
-  a: string;
+  /** String atau ReactNode (untuk jawaban yang butuh link). */
+  a: ReactNode;
 }
 
 export interface FaqCategory {
@@ -134,7 +137,20 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       },
       {
         q: "Apakah data pribadi saya aman di Kahade?",
-        a: "Data pribadimu dilindungi sesuai ketentuan yang berlaku. Kamu berhak mengakses, memperbaiki, dan meminta penghapusan datamu — lihat Kebijakan Privasi kami atau hubungi layanan pelanggan untuk permintaan terkait data.",
+        a: (
+          <>
+            Data pribadimu dilindungi sesuai ketentuan yang berlaku. Kamu
+            berhak mengakses, memperbaiki, dan meminta penghapusan datamu —
+            lihat{" "}
+            <a
+              href="https://legal.kahade.id/privasi"
+              className="font-semibold text-black underline"
+            >
+              Kebijakan Privasi
+            </a>{" "}
+            kami atau hubungi layanan pelanggan untuk permintaan terkait data.
+          </>
+        ),
       },
     ],
   },
@@ -161,7 +177,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       },
       {
         q: "Apakah kuota Rp990.000 hangus jika tidak terpakai?",
-        a: "Kuota pembebasan biaya berlaku per periode langganan dan tidak diakumulasikan ke periode berikutnya. Gunakan sebaik-baiknya selama periode berjalan.",
+        a: "Kuota pembebasan biaya Rp990.000 berlaku per periode langganan — akumulasi biaya transaksimu digratiskan sampai batas itu dalam satu periode. Gunakan sebaik-baiknya selama periode berjalan.",
       },
     ],
   },

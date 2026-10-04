@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Accordion } from "@kahade/ui";
 import { FAQ_CATEGORIES } from "@/lib/faq-data";
 
@@ -12,9 +13,9 @@ export default function FaqPage() {
       <p className="mt-3 text-[15px] leading-relaxed text-neutral-500">
         Jawaban atas pertanyaan yang paling sering ditanyakan pengguna Kahade.
         Tidak menemukan jawabanmu?{" "}
-        <a href="/kontak" className="font-semibold text-black underline">
+        <Link href="/kontak" className="font-semibold text-black underline">
           Hubungi kami
-        </a>
+        </Link>
         .
       </p>
 

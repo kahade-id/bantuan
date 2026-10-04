@@ -14,7 +14,8 @@ export default function KontakPage() {
         Hubungi Kami
       </h1>
       <p className="mt-3 text-[15px] leading-relaxed text-neutral-500">
-        Tim layanan pelanggan Kahade siap membantu setiap hari.
+        Tim layanan pelanggan Kahade siap membantu pada jam operasional di
+        bawah ini.
       </p>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2">

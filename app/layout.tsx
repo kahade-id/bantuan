@@ -14,6 +14,17 @@ export const metadata: Metadata = {
   description:
     "Pusat bantuan Kahade: FAQ, cara kerja jual-beli, biaya, keamanan, dan kontak layanan pelanggan.",
   metadataBase: new URL("https://bantuan.kahade.id"),
+  icons: {
+    icon: "/favicon.svg",
+  },
+  openGraph: {
+    type: "website",
+    locale: "id_ID",
+    siteName: "Bantuan Kahade",
+    title: "Pusat Bantuan Kahade",
+    description:
+      "FAQ, cara kerja jual-beli, biaya, keamanan, dan kontak layanan pelanggan Kahade.",
+  },
 };
 
 export default function RootLayout({

@@ -21,14 +21,28 @@ const CATEGORY_ICONS = [
   Crown,
 ] as const;
 
+/** Indeks pencarian: semua FAQ di semua kategori. */
+const SEARCH_INDEX = FAQ_CATEGORIES.flatMap((cat) =>
+  cat.items.map((item) => ({
+    q: item.q,
+    a: typeof item.a === "string" ? item.a : "",
+    href: `/faq#${cat.slug}`,
+  })),
+);
+
 export default function HomePage() {
   const [query, setQuery] = useState("");
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (q.length < 2) return [];
-    return POPULAR_FAQS.filter((f) => f.q.toLowerCase().includes(q)).slice(0, 6);
+    return SEARCH_INDEX.filter(
+      (f) =>
+        f.q.toLowerCase().includes(q) || f.a.toLowerCase().includes(q),
+    ).slice(0, 6);
   }, [query]);
+
+  const showResults = query.trim().length >= 2;
 
   return (
     <div>
@@ -47,14 +61,23 @@ export default function HomePage() {
               placeholder="Cari jawaban… mis. biaya transaksi"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Escape") setQuery("");
+              }}
               aria-label="Cari bantuan"
+              aria-expanded={showResults}
+              role="combobox"
+              aria-controls="hasil-pencarian"
             />
-            {query.trim().length >= 2 && (
-              <div className="absolute inset-x-0 top-full z-20 mt-2 overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-lift">
-                {results.length > 0 ? (
+            {showResults && (
+              <div
+                id="hasil-pencarian"
+                role="listbox"
+                className="absolute inset-x-0 top-full z-20 mt-2 overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-lift"
+              >                {results.length > 0 ? (
                   <ul>
                     {results.map((r) => (
-                      <li key={r.q}>
+                      <li key={`${r.href}-${r.q}`} role="option" aria-selected="false">
                         <Link
                           href={r.href}
                           className="flex items-center justify-between gap-3 px-4 py-3 text-sm font-medium text-black transition-colors hover:bg-neutral-50"

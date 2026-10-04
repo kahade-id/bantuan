@@ -53,7 +53,7 @@ export default function CaraKerjaPage() {
       </p>
 
       <div className="mt-8 rounded-2xl border border-neutral-200 bg-white p-6">
-        <Steps steps={STEPS} current={2} />
+        <Steps steps={STEPS} current={STEPS.length} />
       </div>
 
       <Alert variant="info" className="mt-6">
