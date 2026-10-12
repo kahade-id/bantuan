@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { UsersThree, AirplaneTilt } from "@phosphor-icons/react/dist/ssr";
-import { Card, Steps, Alert } from "@kahade/ui";
-import { IconTile } from "@/components/site/IconTile";
+import Link from "next/link";
+import { Breadcrumb, PageHeader, Section, TextLink } from "@kahade/ui";
+import { HelpCta } from "@/components/site/HelpCta";
 
 export const metadata: Metadata = {
   title: {
@@ -32,7 +32,7 @@ const STEPS = [
   {
     label: "Beli via Kahade",
     description:
-      "Tekan tombol \"Beli via Kahade\", pilih metode pembayaran, dan selesaikan dalam hitungan detik.",
+      "Tekan tombol \u201cBeli via Kahade\u201d, pilih metode pembayaran, dan selesaikan dalam hitungan detik.",
   },
   {
     label: "Penjual mengirim barang",
@@ -51,48 +51,129 @@ const STEPS = [
   },
 ];
 
-export default function CaraKerjaPage() {
+const FEATURES = [
+  {
+    id: "patungan",
+    title: "Patungan",
+    description:
+      "Pembelian bersama: buat grup patungan, undang teman, masing-masing membayar bagiannya via Kahade, dan barang dikirim ke koordinator.",
+  },
+  {
+    id: "jastip",
+    title: "Jastip",
+    description:
+      "Jasa titip-beli: penyedia membuat “trip”, kamu menitipkan barang beserta budget, dan barang dikirim setelah penyedia membeli dengan bukti pembelian.",
+  },
+];
+
+/** Judul seksi di kolom kiri (pola indeks berkelompok). */
+function SectionLead({
+  index,
+  id,
+  title,
+  description,
+}: {
+  index: string;
+  id: string;
+  title: string;
+  description: string;
+}) {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
-      <h1 className="text-3xl font-extrabold tracking-tight text-black">
-        Cara Kerja Jual Beli Aman di Kahade
-      </h1>
-      <p className="mt-3 text-[15px] leading-relaxed text-neutral-500">
-        Kahade adalah aplikasi jual-beli pengguna ke pengguna yang tampilannya
-        seperti media sosial. Berikut alur jual-belinya:
-      </p>
-
-      <Card className="mt-8">
-        <Steps steps={STEPS} current={STEPS.length} />
-      </Card>
-
-      <Alert variant="info" className="mt-6">
-        Prinsipnya sederhana: &ldquo;Beli via Kahade&rdquo; berarti aman. Dana
-        hanya diteruskan ke penjual setelah kamu mengonfirmasi penerimaan.
-      </Alert>
-
-      <h2 className="mt-12 text-xl font-bold tracking-tight text-black">
-        Fitur unik
-      </h2>
-      <div className="mt-4 grid gap-4 sm:grid-cols-2">
-        <Card className="p-5">
-          <IconTile icon={UsersThree} />
-          <h3 className="mt-4 text-[15px] font-bold text-black">Patungan</h3>
-          <p className="mt-1 text-sm leading-relaxed text-neutral-500">
-            Pembelian bersama: buat grup patungan, undang teman, masing-masing
-            membayar bagiannya via Kahade, dan barang dikirim ke koordinator.
-          </p>
-        </Card>
-        <Card className="p-5">
-          <IconTile icon={AirplaneTilt} />
-          <h3 className="mt-4 text-[15px] font-bold text-black">Jastip</h3>
-          <p className="mt-1 text-sm leading-relaxed text-neutral-500">
-            Jasa titip-beli: penyedia membuat &ldquo;trip&rdquo;, kamu menitipkan
-            barang beserta budget, dan barang dikirim setelah penyedia membeli
-            dengan bukti pembelian.
-          </p>
-        </Card>
+    <div className="lg:col-span-4">
+      <div className="lg:sticky lg:top-28">
+        <p className="text-small tabular-nums text-fg-subtle">{index}</p>
+        <h2 id={id} className="mt-3 text-h3 text-fg">
+          {title}
+        </h2>
+        <p className="mt-2 max-w-xs text-small text-fg-muted">{description}</p>
       </div>
     </div>
+  );
+}
+
+export default function CaraKerjaPage() {
+  return (
+    <>
+      <PageHeader
+        size="h1"
+        breadcrumb={
+          <Breadcrumb
+            items={[{ label: "Bantuan", href: "/" }, { label: "Cara kerja" }]}
+          />
+        }
+        title="Cara kerja jual beli aman di Kahade"
+        lede="Kahade adalah aplikasi jual-beli pengguna ke pengguna yang tampilannya seperti media sosial. Berikut alur jual-belinya."
+      />
+
+      <Section id="alur" spacing="sm" aria-labelledby="alur-judul">
+        <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
+          <SectionLead
+            index="01"
+            id="alur-judul"
+            title="Alur jual beli"
+            description="Enam langkah, dari feed sampai dana diteruskan ke penjual."
+          />
+          <div className="lg:col-span-8">
+            <ol className="border-t border-line">
+              {STEPS.map((step, i) => (
+                <li
+                  key={step.label}
+                  className="grid grid-cols-[3rem_minmax(0,1fr)] gap-4 border-b border-line py-7 sm:grid-cols-[5.5rem_minmax(0,1fr)] sm:gap-8 sm:py-9"
+                >
+                  <span className="text-h2 tabular-nums text-fg">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <div className="sm:pt-1.5">
+                    <h3 className="text-h3 text-fg">{step.label}</h3>
+                    <p className="mt-2 max-w-[52ch] text-body text-fg-muted sm:text-body-lg">
+                      {step.description}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+
+            <div className="mt-10 border-l-2 border-fg pl-5 sm:mt-12 sm:pl-6">
+              <p className="text-h3 text-fg">
+                Prinsipnya sederhana: &ldquo;Beli via Kahade&rdquo; berarti aman.
+              </p>
+              <p className="mt-2 text-body-lg text-fg-muted">
+                Dana hanya diteruskan ke penjual setelah kamu mengonfirmasi
+                penerimaan.
+              </p>
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      <Section
+        id="fitur"
+        spacing="sm"
+        divider
+        aria-labelledby="fitur-judul"
+      >
+        <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
+          <SectionLead
+            index="02"
+            id="fitur-judul"
+            title="Fitur unik"
+            description="Cara bertransaksi bersama, tetap dengan pembayaran via Kahade."
+          />
+          <div className="grid gap-10 sm:grid-cols-2 sm:gap-8 lg:col-span-8">
+            {FEATURES.map((f) => (
+              <article key={f.id} id={f.id} className="border-t border-fg pt-6">
+                <h3 className="text-h3 text-fg">{f.title}</h3>
+                <p className="mt-3 text-body text-fg-muted">{f.description}</p>
+                <TextLink as={Link} href="/faq#jual-beli" className="mt-4">
+                  {`Tanya jawab ${f.title.toLowerCase()}`}
+                </TextLink>
+              </article>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      <HelpCta />
+    </>
   );
 }

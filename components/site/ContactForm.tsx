@@ -16,6 +16,9 @@ const CATEGORIES = [
   { value: "lainnya", label: "Lainnya" },
 ];
 
+/** Opsi select tanpa entri kosong (placeholder dirender oleh Select). */
+const CATEGORY_OPTIONS = CATEGORIES.filter((c) => c.value !== "");
+
 interface FormErrors {
   name?: string;
   email?: string;
@@ -85,7 +88,7 @@ export function ContactForm() {
         manual ke{" "}
         <a
           href={`mailto:${SUPPORT_EMAIL}`}
-          className="font-semibold underline"
+          className="font-semibold text-fg underline underline-offset-4"
         >
           {SUPPORT_EMAIL}
         </a>
@@ -122,7 +125,8 @@ export function ContactForm() {
         <Select
           label="Kategori"
           required
-          options={CATEGORIES}
+          placeholder="Pilih kategori"
+          options={CATEGORY_OPTIONS}
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           error={errors.category}
@@ -144,9 +148,9 @@ export function ContactForm() {
         loading={submitting}
         className="mt-5 w-full sm:w-auto"
       >
-        {submitting ? "Mengirim…" : "Kirim Pesan"}
+        {submitting ? "Mengirim…" : "Kirim pesan"}
       </Button>
-      <p className="mt-3 text-xs text-neutral-500">
+      <p className="mt-3 text-caption text-fg-muted">
         Pesan dikirim via aplikasi email ke {SUPPORT_EMAIL}. Respons maksimal
         1×24 jam kerja.
       </p>

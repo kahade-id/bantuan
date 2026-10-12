@@ -3,33 +3,9 @@
 @import "@kahade/ui/styles/base.css";
 
 /* WAJIB: Tailwind v4 tidak men-scan node_modules — tanpa ini, utility class
-   yang hanya dipakai di source @kahade/ui (mis. pl-11 di SearchField) tidak
-   ter-generate dan layout DS rusak diam-diam. */
+   yang hanya dipakai di source @kahade/ui tidak ter-generate. */
 @source "../node_modules/@kahade/ui/src";
 
 html {
   scroll-behavior: smooth;
-}
-
-/* Hormati preferensi reduced-motion: matikan smooth scroll saat pengguna
-   memintanya, dan netralkan animasi/transisi lain. */
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* Indikator fokus keyboard yang konsisten di semua elemen interaktif yang
-   tidak punya gaya focus-visible sendiri (komponen DS sudah punya ring
-   sendiri dan menang karena spesifisitasnya lebih tinggi). */
-:focus-visible {
-  outline: 2px solid #000;
-  outline-offset: 2px;
 }

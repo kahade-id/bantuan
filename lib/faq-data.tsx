@@ -144,7 +144,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
             lihat{" "}
             <a
               href="https://legal.kahade.id/privasi"
-              className="font-semibold text-black underline"
+              className="font-semibold text-fg underline decoration-line-control underline-offset-4 hover:decoration-fg"
             >
               Kebijakan Privasi
             </a>{" "}

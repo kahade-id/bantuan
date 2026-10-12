@@ -1,6 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Accordion, Card } from "@kahade/ui";
+import {
+  Accordion,
+  Breadcrumb,
+  Container,
+  PageHeader,
+  SectionHeader,
+  TextLink,
+  Toc,
+  type TocItem,
+} from "@kahade/ui";
+import { FaqAnswer } from "@/components/site/FaqAnswer";
+import { FaqSearch } from "@/components/site/FaqSearch";
+import { HelpCta } from "@/components/site/HelpCta";
 import { FAQ_CATEGORIES } from "@/lib/faq-data";
 import { faqPageJsonLd } from "@/lib/faq-schema";
 
@@ -17,48 +29,114 @@ export const metadata: Metadata = {
   },
 };
 
+const TOC: TocItem[] = FAQ_CATEGORIES.map((cat) => ({
+  id: cat.slug,
+  label: cat.title,
+}));
+
+const TOTAL_QUESTIONS = FAQ_CATEGORIES.reduce(
+  (n, cat) => n + cat.items.length,
+  0,
+);
+
 export default function FaqPage() {
   const jsonLd = JSON.stringify(faqPageJsonLd()).replace(/</g, "\\u003c");
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLd }}
       />
-      <h1 className="text-3xl font-extrabold tracking-tight text-black">
-        FAQ Jual Beli Aman
-      </h1>
-      <p className="mt-3 text-[15px] leading-relaxed text-neutral-500">
-        Jawaban atas pertanyaan yang paling sering ditanyakan pengguna Kahade.
-        Tidak menemukan jawabanmu?{" "}
-        <Link href="/kontak" className="font-semibold text-black underline">
-          Hubungi kami
-        </Link>
-        .
-      </p>
 
-      {FAQ_CATEGORIES.map((cat) => (
-        <section key={cat.slug} id={cat.slug} className="mt-10 scroll-mt-24">
-          <h2 className="text-xl font-bold tracking-tight text-black">
-            {cat.title}
-          </h2>
-          <p className="mt-1 text-sm text-neutral-500">{cat.description}</p>
-          <Card className="mt-4 px-5 py-2">
-            <Accordion
-              items={cat.items.map((item, i) => ({
-                id: `${cat.slug}-${i}`,
-                title: item.q,
-                content: (
-                  <p className="pb-5 text-[15px] leading-relaxed text-neutral-600">
-                    {item.a}
-                  </p>
-                ),
-              }))}
+      <PageHeader
+        size="h1"
+        breadcrumb={
+          <Breadcrumb items={[{ label: "Bantuan", href: "/" }, { label: "FAQ" }]} />
+        }
+        title="FAQ jual beli aman"
+        lede={
+          <>
+            Jawaban atas pertanyaan yang paling sering ditanyakan pengguna
+            Kahade. Tidak menemukan jawabanmu?{" "}
+            <Link
+              href="/kontak"
+              className="font-semibold text-fg underline decoration-line-control decoration-1 underline-offset-4 hover:decoration-fg"
             >
-            </Accordion>
-          </Card>
-        </section>
-      ))}
-    </div>
+              Hubungi kami
+            </Link>
+            .
+          </>
+        }
+        aside={<FaqSearch />}
+        meta={[
+          { label: "Topik", value: FAQ_CATEGORIES.length },
+          { label: "Pertanyaan", value: TOTAL_QUESTIONS },
+          {
+            label: "Layanan pelanggan",
+            value: (
+              <>
+                Senin–Jumat,{" "}
+                <span className="whitespace-nowrap">09.00–17.00 WIB</span>
+              </>
+            ),
+          },
+        ]}
+      />
+
+      <Container className="py-12 sm:py-16 lg:py-20">
+        <div className="lg:grid lg:grid-cols-12 lg:gap-12">
+          <aside className="hidden lg:col-span-3 lg:block">
+            <div className="sticky top-28 max-h-[calc(100dvh-8rem)] overflow-y-auto pb-4">
+              <Toc items={TOC} title="Topik" />
+              <div className="mt-10 border-t border-line pt-6">
+                <p className="text-small text-fg-muted">
+                  Tidak menemukan jawaban?
+                </p>
+                <TextLink as={Link} href="/kontak" className="mt-1">
+                  Hubungi kami
+                </TextLink>
+              </div>
+            </div>
+          </aside>
+
+          <div className="min-w-0 lg:col-span-8 lg:col-start-5">
+            <Toc
+              items={TOC}
+              title="Topik"
+              variant="disclosure"
+              className="mb-12 lg:hidden"
+            />
+
+            {FAQ_CATEGORIES.map((cat, ci) => (
+              <section
+                key={cat.slug}
+                id={cat.slug}
+                className={ci > 0 ? "mt-16 sm:mt-20" : ""}
+              >
+                <SectionHeader
+                  size="h3"
+                  index={String(ci + 1).padStart(2, "0")}
+                  eyebrow={`${cat.items.length} pertanyaan`}
+                  title={cat.title}
+                  description={cat.description}
+                />
+                <Accordion
+                  size="lg"
+                  headingLevel={3}
+                  className="mt-6 sm:mt-8"
+                  items={cat.items.map((item, i) => ({
+                    id: `${cat.slug}-${i}`,
+                    title: item.q,
+                    content: <FaqAnswer answer={item.a} />,
+                  }))}
+                />
+              </section>
+            ))}
+          </div>
+        </div>
+      </Container>
+
+      <HelpCta secondary={{ href: "/cara-kerja", label: "Pelajari cara kerja" }} />
+    </>
   );
 }
