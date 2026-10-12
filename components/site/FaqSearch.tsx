@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
@@ -37,14 +37,17 @@ function highlight(text: string, query: string) {
 interface FaqSearchProps {
   /** `lg` untuk pencarian utama beranda. */
   size?: "md" | "lg";
+  /** Kata kunci populer di bawah kolom — klik mengisi pencarian. */
+  suggestions?: string[];
 }
 
 /**
  * Kolom pencarian FAQ (combobox + daftar hasil). Dipisah sebagai client
  * component agar halaman tetap Server Component.
  */
-export function FaqSearch({ size = "md" }: FaqSearchProps) {
+export function FaqSearch({ size = "md", suggestions = [] }: FaqSearchProps) {
   const [query, setQuery] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
   const [activeIndex, setActiveIndex] = useState(-1);
   const [open, setOpen] = useState(false);
   const router = useRouter();
@@ -100,115 +103,142 @@ export function FaqSearch({ size = "md" }: FaqSearchProps) {
     }
   };
 
-  return (
-    <div
-      className="relative"
-      onBlur={(e) => {
-        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
-          setOpen(false);
-        }
-      }}
-    >
-      <SearchField
-        size={size}
-        placeholder="Cari: biaya, OTP, sengketa…"
-        value={query}
-        onFocus={() => setOpen(true)}
-        onChange={(e) => {
-          setQuery(e.target.value);
-          setActiveIndex(-1);
-          setOpen(true);
-        }}
-        onClear={reset}
-        onKeyDown={onSearchKeyDown}
-        aria-label="Cari bantuan"
-        role="combobox"
-        aria-autocomplete="list"
-        aria-expanded={hasResults}
-        aria-controls={hasResults ? listId : undefined}
-        aria-activedescendant={
-          hasResults && activeIndex >= 0 ? optionId(activeIndex) : undefined
-        }
-      />
+  const pickSuggestion = (term: string) => {
+    setQuery(term);
+    setActiveIndex(-1);
+    setOpen(true);
+    inputRef.current?.focus();
+  };
 
-      {showPanel && (
-        <div
-          // Cegah blur kolom pencarian saat hasil diklik (Safari tidak
-          // memfokuskan tautan saat diklik).
-          onMouseDown={(e) => e.preventDefault()}
-          className="absolute inset-x-0 top-full z-30 mt-2 overflow-hidden rounded-control border border-line bg-surface shadow-lift"
-        >
-          {results.length > 0 ? (
-            <ul
-              id={listId}
-              role="listbox"
-              aria-label="Hasil pencarian"
-              className="max-h-[60vh] overflow-y-auto py-2"
-            >
-              {results.map((r, idx) => (
-                <li key={`${r.href}-${r.q}`} role="presentation">
+  return (
+    <>
+      <div
+        className="relative"
+        onBlur={(e) => {
+          if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
+            setOpen(false);
+          }
+        }}
+      >
+        <SearchField
+          ref={inputRef}
+          size={size}
+          spellCheck={false}
+          placeholder="Cari: biaya, OTP, sengketa…"
+          value={query}
+          onFocus={() => setOpen(true)}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setActiveIndex(-1);
+            setOpen(true);
+          }}
+          onClear={reset}
+          onKeyDown={onSearchKeyDown}
+          aria-label="Cari bantuan"
+          role="combobox"
+          aria-autocomplete="list"
+          aria-expanded={hasResults}
+          aria-controls={hasResults ? listId : undefined}
+          aria-activedescendant={
+            hasResults && activeIndex >= 0 ? optionId(activeIndex) : undefined
+          }
+        />
+
+        {showPanel && (
+          <div
+            // Cegah blur kolom pencarian saat hasil diklik (Safari tidak
+            // memfokuskan tautan saat diklik).
+            onMouseDown={(e) => e.preventDefault()}
+            className="absolute inset-x-0 top-full z-30 mt-2 overflow-hidden rounded-control border border-line bg-surface shadow-lift"
+          >
+            {results.length > 0 ? (
+              <ul
+                id={listId}
+                role="listbox"
+                aria-label="Hasil pencarian"
+                className="max-h-[60vh] overflow-y-auto py-2"
+              >
+                {results.map((r, idx) => (
+                  <li key={`${r.href}-${r.q}`} role="presentation">
+                    <Link
+                      href={r.href}
+                      id={optionId(idx)}
+                      role="option"
+                      aria-selected={idx === activeIndex}
+                      tabIndex={-1}
+                      onMouseEnter={() => setActiveIndex(idx)}
+                      className={`flex min-h-12 items-start justify-between gap-4 px-4 py-3 transition-colors sm:px-5 ${
+                        idx === activeIndex ? "bg-surface-2" : ""
+                      }`}
+                    >
+                      <span className="min-w-0">
+                        <span className="block text-body font-medium text-fg">
+                          {highlight(r.q, query)}
+                        </span>
+                        <span className="mt-0.5 block text-caption text-fg-subtle">
+                          {r.category}
+                        </span>
+                      </span>
+                      <Icon
+                        icon={ArrowRight}
+                        size={18}
+                        className="mt-0.5 shrink-0 text-fg-muted"
+                      />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div className="px-4 py-4 text-small text-fg-muted sm:px-5">
+                <p className="font-semibold text-fg">
+                  Tidak ada hasil untuk &ldquo;{query.trim()}&rdquo;.
+                </p>
+                <p className="mt-1">
+                  Coba kata kunci lain,{" "}
                   <Link
-                    href={r.href}
-                    id={optionId(idx)}
-                    role="option"
-                    aria-selected={idx === activeIndex}
-                    tabIndex={-1}
-                    onMouseEnter={() => setActiveIndex(idx)}
-                    className={`flex min-h-12 items-start justify-between gap-4 px-4 py-3 transition-colors sm:px-5 ${
-                      idx === activeIndex ? "bg-surface-2" : ""
-                    }`}
+                    href="/faq"
+                    className="font-semibold text-fg underline decoration-line-control underline-offset-4 hover:decoration-fg"
                   >
-                    <span className="min-w-0">
-                      <span className="block text-body font-medium text-fg">
-                        {highlight(r.q, query)}
-                      </span>
-                      <span className="mt-0.5 block text-caption text-fg-subtle">
-                        {r.category}
-                      </span>
-                    </span>
-                    <Icon
-                      icon={ArrowRight}
-                      size={18}
-                      className="mt-0.5 shrink-0 text-fg-muted"
-                    />
+                    lihat semua FAQ
                   </Link>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <div className="px-4 py-4 text-small text-fg-muted sm:px-5">
-              <p className="font-semibold text-fg">
-                Tidak ada hasil untuk &ldquo;{query.trim()}&rdquo;.
-              </p>
-              <p className="mt-1">
-                Coba kata kunci lain,{" "}
-                <Link
-                  href="/faq"
-                  className="font-semibold text-fg underline decoration-line-control underline-offset-4 hover:decoration-fg"
-                >
-                  lihat semua FAQ
-                </Link>
-                , atau{" "}
-                <Link
-                  href="/kontak"
-                  className="font-semibold text-fg underline decoration-line-control underline-offset-4 hover:decoration-fg"
-                >
-                  hubungi kami
-                </Link>
-                .
-              </p>
-            </div>
-          )}
+                  , atau{" "}
+                  <Link
+                    href="/kontak"
+                    className="font-semibold text-fg underline decoration-line-control underline-offset-4 hover:decoration-fg"
+                  >
+                    hubungi kami
+                  </Link>
+                  .
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
+        <p role="status" aria-live="polite" className="sr-only">
+          {showPanel
+            ? results.length > 0
+              ? `${results.length} hasil ditemukan. Gunakan panah atas dan bawah untuk memilih.`
+              : `Tidak ada hasil untuk ${query.trim()}.`
+            : ""}
+        </p>
+      </div>
+
+      {suggestions.length > 0 && (
+        <div className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1">
+          <span className="mr-1 text-small text-fg-subtle">Populer:</span>
+          {suggestions.map((term) => (
+            <button
+              key={term}
+              type="button"
+              onClick={() => pickSuggestion(term)}
+              className="inline-flex min-h-11 items-center rounded-full px-1 text-small font-medium text-fg underline decoration-line-control underline-offset-4 transition-colors hover:decoration-fg focus-visible:ring-2 focus-visible:ring-fg focus-visible:outline-none"
+            >
+              {term}
+            </button>
+          ))}
         </div>
       )}
-
-      <p role="status" aria-live="polite" className="sr-only">
-        {showPanel
-          ? results.length > 0
-            ? `${results.length} hasil ditemukan. Gunakan panah atas dan bawah untuk memilih.`
-            : `Tidak ada hasil untuk ${query.trim()}.`
-          : ""}
-      </p>
-    </div>
+    </>
   );
 }
