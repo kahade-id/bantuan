@@ -124,7 +124,7 @@ export default function HomePage() {
         ]}
       >
         <div className="mt-8 max-w-reading sm:mt-10">
-          <FaqSearch size="lg" />
+          <FaqSearch size="lg" suggestions={["Biaya", "OTP", "Sengketa", "Patungan", "Kahade Plus"]} />
         </div>
       </PageHeader>
 
