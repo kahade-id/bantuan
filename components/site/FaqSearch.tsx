@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
@@ -13,6 +13,7 @@ const SEARCH_INDEX = FAQ_CATEGORIES.flatMap((cat) =>
     q: item.q,
     a: typeof item.a === "string" ? item.a : "",
     href: `/faq#${cat.slug}`,
+    category: cat.title,
   })),
 );
 
@@ -25,7 +26,7 @@ function highlight(text: string, query: string) {
   return (
     <>
       {text.slice(0, i)}
-      <mark className="rounded-sm bg-yellow-200 px-0.5 text-inherit">
+      <mark className="rounded-tag bg-surface-3 px-0.5 text-fg">
         {text.slice(i, i + q.length)}
       </mark>
       {text.slice(i + q.length)}
@@ -33,15 +34,23 @@ function highlight(text: string, query: string) {
   );
 }
 
+interface FaqSearchProps {
+  /** `lg` untuk pencarian utama beranda. */
+  size?: "md" | "lg";
+}
+
 /**
- * Kolom pencarian FAQ (combobox + hasil). Satu-satunya bagian interaktif
- * homepage — dipisah agar halaman tetap Server Component.
+ * Kolom pencarian FAQ (combobox + daftar hasil). Dipisah sebagai client
+ * component agar halaman tetap Server Component.
  */
-export function FaqSearch() {
+export function FaqSearch({ size = "md" }: FaqSearchProps) {
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(-1);
+  const [open, setOpen] = useState(false);
   const router = useRouter();
-  const listRef = useRef<HTMLUListElement>(null);
+  const uid = useId();
+  const listId = `${uid}-hasil`;
+  const optionId = (idx: number) => `${uid}-hasil-${idx}`;
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -58,96 +67,132 @@ export function FaqSearch() {
       .slice(0, 6);
   }, [query]);
 
-  const showResults = query.trim().length >= 2;
+  const showPanel = open && query.trim().length >= 2;
+  const hasResults = showPanel && results.length > 0;
 
   // Scroll opsi aktif ke dalam tampilan saat navigasi panah.
   useEffect(() => {
     if (activeIndex < 0) return;
-    listRef.current
-      ?.querySelector(`#hasil-${activeIndex}`)
+    document
+      .getElementById(`${uid}-hasil-${activeIndex}`)
       ?.scrollIntoView({ block: "nearest" });
-  }, [activeIndex]);
+  }, [activeIndex, uid]);
+
+  const reset = () => {
+    setQuery("");
+    setActiveIndex(-1);
+  };
 
   const onSearchKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Escape") {
-      setQuery("");
-      setActiveIndex(-1);
+      reset();
     } else if (e.key === "ArrowDown" && results.length > 0) {
       e.preventDefault();
+      setOpen(true);
       setActiveIndex((i) => (i + 1) % results.length);
     } else if (e.key === "ArrowUp" && results.length > 0) {
       e.preventDefault();
+      setOpen(true);
       setActiveIndex((i) => (i - 1 + results.length) % results.length);
-    } else if (e.key === "Enter" && activeIndex >= 0 && results[activeIndex]) {
-      router.push(results[activeIndex].href);
+    } else if (e.key === "Enter" && results.length > 0) {
+      e.preventDefault();
+      router.push(results[activeIndex >= 0 ? activeIndex : 0].href);
     }
   };
 
   return (
-    <>
+    <div
+      className="relative"
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
+          setOpen(false);
+        }
+      }}
+    >
       <SearchField
-        placeholder="Cari jawaban… mis. biaya transaksi"
+        size={size}
+        placeholder="Cari: biaya, OTP, sengketa…"
         value={query}
+        onFocus={() => setOpen(true)}
         onChange={(e) => {
           setQuery(e.target.value);
           setActiveIndex(-1);
+          setOpen(true);
         }}
-        onClear={() => {
-          setQuery("");
-          setActiveIndex(-1);
-        }}
+        onClear={reset}
         onKeyDown={onSearchKeyDown}
         aria-label="Cari bantuan"
-        aria-expanded={showResults}
         role="combobox"
-        aria-controls="hasil-pencarian"
+        aria-autocomplete="list"
+        aria-expanded={hasResults}
+        aria-controls={hasResults ? listId : undefined}
         aria-activedescendant={
-          activeIndex >= 0 ? `hasil-${activeIndex}` : undefined
+          hasResults && activeIndex >= 0 ? optionId(activeIndex) : undefined
         }
       />
-      {showResults && (
+
+      {showPanel && (
         <div
-          id="hasil-pencarian"
-          role="listbox"
-          aria-label="Hasil pencarian"
-          className="absolute inset-x-0 top-full z-20 mt-2 overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-lift"
+          // Cegah blur kolom pencarian saat hasil diklik (Safari tidak
+          // memfokuskan tautan saat diklik).
+          onMouseDown={(e) => e.preventDefault()}
+          className="absolute inset-x-0 top-full z-30 mt-2 overflow-hidden rounded-control border border-line bg-surface shadow-lift"
         >
           {results.length > 0 ? (
-            <ul ref={listRef} className="max-h-[60vh] overflow-y-auto">
+            <ul
+              id={listId}
+              role="listbox"
+              aria-label="Hasil pencarian"
+              className="max-h-[60vh] overflow-y-auto py-2"
+            >
               {results.map((r, idx) => (
-                <li key={`${r.href}-${r.q}`}>
+                <li key={`${r.href}-${r.q}`} role="presentation">
                   <Link
                     href={r.href}
-                    id={`hasil-${idx}`}
+                    id={optionId(idx)}
                     role="option"
                     aria-selected={idx === activeIndex}
+                    tabIndex={-1}
                     onMouseEnter={() => setActiveIndex(idx)}
-                    className={`flex min-h-[44px] items-center justify-between gap-3 px-4 py-3 text-sm font-medium text-black transition-colors hover:bg-neutral-50 ${
-                      idx === activeIndex ? "bg-neutral-100" : ""
+                    className={`flex min-h-12 items-start justify-between gap-4 px-4 py-3 transition-colors sm:px-5 ${
+                      idx === activeIndex ? "bg-surface-2" : ""
                     }`}
                   >
-                    <span>{highlight(r.q, query)}</span>
+                    <span className="min-w-0">
+                      <span className="block text-body font-medium text-fg">
+                        {highlight(r.q, query)}
+                      </span>
+                      <span className="mt-0.5 block text-caption text-fg-subtle">
+                        {r.category}
+                      </span>
+                    </span>
                     <Icon
                       icon={ArrowRight}
-                      size={16}
-                      className="shrink-0 text-neutral-400"
+                      size={18}
+                      className="mt-0.5 shrink-0 text-fg-muted"
                     />
                   </Link>
                 </li>
               ))}
             </ul>
           ) : (
-            <div role="status" className="px-4 py-4 text-sm text-neutral-500">
-              <p className="font-medium text-black">
+            <div className="px-4 py-4 text-small text-fg-muted sm:px-5">
+              <p className="font-semibold text-fg">
                 Tidak ada hasil untuk &ldquo;{query.trim()}&rdquo;.
               </p>
               <p className="mt-1">
                 Coba kata kunci lain,{" "}
-                <Link href="/faq" className="font-semibold text-black underline">
+                <Link
+                  href="/faq"
+                  className="font-semibold text-fg underline decoration-line-control underline-offset-4 hover:decoration-fg"
+                >
                   lihat semua FAQ
                 </Link>
                 , atau{" "}
-                <Link href="/kontak" className="font-semibold text-black underline">
+                <Link
+                  href="/kontak"
+                  className="font-semibold text-fg underline decoration-line-control underline-offset-4 hover:decoration-fg"
+                >
                   hubungi kami
                 </Link>
                 .
@@ -156,6 +201,14 @@ export function FaqSearch() {
           )}
         </div>
       )}
-    </>
+
+      <p role="status" aria-live="polite" className="sr-only">
+        {showPanel
+          ? results.length > 0
+            ? `${results.length} hasil ditemukan. Gunakan panah atas dan bawah untuk memilih.`
+            : `Tidak ada hasil untuk ${query.trim()}.`
+          : ""}
+      </p>
+    </div>
   );
 }

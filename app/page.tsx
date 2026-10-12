@@ -1,24 +1,8 @@
 import Link from "next/link";
-import {
-  UserCircle,
-  Storefront,
-  Wallet,
-  ShieldCheck,
-  Crown,
-  ArrowRight,
-} from "@phosphor-icons/react/dist/ssr";
-import { Icon, Card } from "@kahade/ui";
-import { IconTile } from "@/components/site/IconTile";
+import { IndexList, PageHeader, Section, type IndexItem } from "@kahade/ui";
 import { FaqSearch } from "@/components/site/FaqSearch";
+import { HelpCta } from "@/components/site/HelpCta";
 import { FAQ_CATEGORIES, POPULAR_FAQS } from "@/lib/faq-data";
-
-const CATEGORY_ICONS = [
-  UserCircle,
-  Storefront,
-  Wallet,
-  ShieldCheck,
-  Crown,
-] as const;
 
 const ORG_JSON_LD = JSON.stringify({
   "@context": "https://schema.org",
@@ -37,85 +21,148 @@ const ORG_JSON_LD = JSON.stringify({
   ],
 }).replace(/</g, "\\u003c");
 
+const TOTAL_QUESTIONS = FAQ_CATEGORIES.reduce(
+  (n, cat) => n + cat.items.length,
+  0,
+);
+
+const CATEGORY_TITLE = new Map(FAQ_CATEGORIES.map((c) => [c.slug, c.title]));
+
+interface Group {
+  id: string;
+  title: string;
+  description: string;
+  size: "md" | "lg";
+  titleAs?: "h3" | "span";
+  items: IndexItem[];
+}
+
+const GROUPS: Group[] = [
+  {
+    id: "topik",
+    title: "Topik bantuan",
+    description:
+      "Jawaban seputar akun, jual beli, pembayaran, keamanan, dan Kahade Plus.",
+    size: "lg",
+    items: FAQ_CATEGORIES.map((cat) => ({
+      key: cat.slug,
+      href: `/faq#${cat.slug}`,
+      title: cat.title,
+      description: cat.description,
+      meta: `${cat.items.length} pertanyaan`,
+    })),
+  },
+  {
+    id: "populer",
+    title: "Pertanyaan populer",
+    description: "Pertanyaan yang sering diajukan pengguna Kahade.",
+    size: "md",
+    titleAs: "span",
+    items: POPULAR_FAQS.map((f) => ({
+      key: f.q,
+      href: f.href,
+      title: f.q,
+      meta: CATEGORY_TITLE.get(f.href.split("#")[1] ?? ""),
+    })),
+  },
+  {
+    id: "panduan",
+    title: "Panduan",
+    description: "Alur jual beli langkah demi langkah, serta patungan dan jastip.",
+    size: "lg",
+    items: [
+      {
+        key: "alur",
+        href: "/cara-kerja#alur",
+        title: "Cara kerja jual beli",
+        description:
+          "Dari menemukan barang di feed sampai dana diteruskan ke penjual.",
+      },
+      {
+        key: "patungan",
+        href: "/cara-kerja#patungan",
+        title: "Patungan",
+        description:
+          "Pembelian bersama: buat grup, undang teman, dan masing-masing membayar bagiannya via Kahade.",
+      },
+      {
+        key: "jastip",
+        href: "/cara-kerja#jastip",
+        title: "Jastip",
+        description:
+          "Jasa titip-beli: penyedia membuat “trip”, kamu menitipkan barang beserta budget.",
+      },
+    ],
+  },
+];
+
 export default function HomePage() {
   return (
-    <div>
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: ORG_JSON_LD }}
       />
-      {/* Hero */}
-      <section className="border-b border-neutral-200 bg-white">
-        <div className="mx-auto max-w-3xl px-4 py-14 text-center sm:px-6 sm:py-20">
-          <h1 className="text-3xl font-extrabold tracking-tight text-black sm:text-4xl">
-            Bantuan Jual Beli Aman di Kahade
-          </h1>
-          <p className="mx-auto mt-3 max-w-xl text-[15px] leading-relaxed text-neutral-500">
-            Ada yang bisa kami bantu? Temukan jawaban seputar akun, jual-beli,
-            pembayaran, keamanan, dan Kahade Plus.
-          </p>
-          <div className="relative mx-auto mt-8 max-w-xl text-left">
-            <FaqSearch />
-          </div>
-        </div>
-      </section>
 
-      {/* Kategori */}
-      <section className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
-        <h2 className="text-xl font-bold tracking-tight text-black">
-          Jelajahi topik
-        </h2>
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {FAQ_CATEGORIES.map((cat, i) => (
-            <Link key={cat.slug} href={`/faq#${cat.slug}`}>
-              <Card interactive className="h-full p-5">
-                <IconTile icon={CATEGORY_ICONS[i % CATEGORY_ICONS.length]} />
-                <h3 className="mt-4 text-[15px] font-bold text-black">
-                  {cat.title}
-                </h3>
-                <p className="mt-1 text-sm leading-relaxed text-neutral-500">
-                  {cat.description}
+      <PageHeader
+        size="display"
+        eyebrow="Pusat bantuan"
+        title="Bantuan jual beli aman di Kahade."
+        lede="Ada yang bisa kami bantu? Temukan jawaban seputar akun, jual beli, pembayaran, keamanan, dan Kahade Plus."
+        meta={[
+          { label: "Topik", value: FAQ_CATEGORIES.length },
+          { label: "Pertanyaan", value: TOTAL_QUESTIONS },
+          {
+            label: "Layanan pelanggan",
+            value: (
+              <>
+                Senin–Jumat,{" "}
+                <span className="whitespace-nowrap">09.00–17.00 WIB</span>
+              </>
+            ),
+          },
+        ]}
+      >
+        <div className="mt-8 max-w-reading sm:mt-10">
+          <FaqSearch size="lg" />
+        </div>
+      </PageHeader>
+
+      {GROUPS.map((group, gi) => (
+        <Section
+          key={group.id}
+          id={group.id}
+          divider={gi > 0}
+          spacing="sm"
+          aria-labelledby={`${group.id}-judul`}
+        >
+          <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
+            <div className="lg:col-span-4">
+              <div className="lg:sticky lg:top-28">
+                <p className="text-small tabular-nums text-fg-subtle">
+                  {String(gi + 1).padStart(2, "0")}
                 </p>
-                <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-black">
-                  Lihat FAQ
-                  <Icon icon={ArrowRight} size={15} />
-                </span>
-              </Card>
-            </Link>
-          ))}
-          <Link href="/cara-kerja">
-            <Card interactive className="h-full p-5">
-              <IconTile icon={ArrowRight} dark />
-              <h3 className="mt-4 text-[15px] font-bold text-black">
-                Cara Kerja
-              </h3>
-              <p className="mt-1 text-sm leading-relaxed text-neutral-500">
-                Alur jual-beli langkah demi langkah, serta patungan dan jastip.
-              </p>
-              <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-black">
-                Pelajari
-                <Icon icon={ArrowRight} size={15} />
-              </span>
-            </Card>
-          </Link>
-        </div>
+                <h2 id={`${group.id}-judul`} className="mt-3 text-h3 text-fg">
+                  {group.title}
+                </h2>
+                <p className="mt-2 max-w-xs text-small text-fg-muted">
+                  {group.description}
+                </p>
+              </div>
+            </div>
+            <div className="lg:col-span-8">
+              <IndexList
+                linkAs={Link}
+                size={group.size}
+                titleAs={group.titleAs}
+                items={group.items}
+              />
+            </div>
+          </div>
+        </Section>
+      ))}
 
-        {/* Populer */}
-        <h2 className="mt-12 text-xl font-bold tracking-tight text-black">
-          Sering dicari
-        </h2>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {POPULAR_FAQS.slice(0, 6).map((f) => (
-            <Link
-              key={f.q}
-              href={f.href}
-              className="inline-flex min-h-[44px] items-center rounded-full border border-neutral-200 bg-white px-4 py-2 text-sm font-medium text-neutral-700 transition-colors hover:border-black hover:text-black"
-            >
-              {f.q}
-            </Link>
-          ))}
-        </div>
-      </section>
-    </div>
+      <HelpCta />
+    </>
   );
 }

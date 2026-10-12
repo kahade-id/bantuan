@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
-import { EnvelopeSimple, Clock, ChatCircleDots } from "@phosphor-icons/react/dist/ssr";
-import { Icon, Card, Alert } from "@kahade/ui";
-import { IconTile } from "@/components/site/IconTile";
+import {
+  Badge,
+  Breadcrumb,
+  Card,
+  Container,
+  CopyButton,
+  DescriptionList,
+  PageHeader,
+} from "@kahade/ui";
 import { ContactForm } from "@/components/site/ContactForm";
 
 export const metadata: Metadata = {
@@ -17,94 +23,128 @@ export const metadata: Metadata = {
   },
 };
 
+const SUPPORT_EMAIL = "halo@kahade.id";
+
+const REPORT_CHECKLIST = [
+  "Username atau nomor HP terdaftar di akunmu.",
+  "Waktu kejadian (tanggal dan jam, bila ingat).",
+  "Screenshot chat, bukti pembayaran, atau foto barang terkait.",
+  "ID transaksi (ada di detail transaksi di aplikasi).",
+  "Kronologi singkat: apa yang terjadi, langkah demi langkah.",
+];
+
 export default function KontakPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
-      <h1 className="text-3xl font-extrabold tracking-tight text-black">
-        Hubungi Layanan Pelanggan Kahade
-      </h1>
-      <p className="mt-3 text-[15px] leading-relaxed text-neutral-500">
-        Tim layanan pelanggan Kahade siap membantu pada jam operasional di
-        bawah ini.
-      </p>
+    <>
+      <PageHeader
+        size="h1"
+        breadcrumb={
+          <Breadcrumb items={[{ label: "Bantuan", href: "/" }, { label: "Kontak" }]} />
+        }
+        title="Hubungi layanan pelanggan Kahade"
+        lede="Tim layanan pelanggan Kahade siap membantu pada jam operasional di bawah ini."
+      />
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-2">
-        <Card className="p-5">
-          <IconTile icon={EnvelopeSimple} />
-          <h2 className="mt-4 text-[15px] font-bold text-black">Email</h2>
-          <a
-            href="mailto:halo@kahade.id"
-            className="mt-1 inline-flex min-h-[44px] items-center text-sm font-semibold text-black underline"
+      <Container className="py-12 sm:py-16 lg:py-20">
+        <div className="grid gap-14 lg:grid-cols-12 lg:gap-x-12 lg:gap-y-16">
+          {/* Kanal kontak */}
+          <section
+            aria-labelledby="kanal-judul"
+            className="lg:col-span-5 lg:col-start-1 lg:row-start-1"
           >
-            halo@kahade.id
-          </a>
-          <p className="mt-1 text-sm text-neutral-500">
-            Respons maksimal 1×24 jam kerja.
-          </p>
-        </Card>
-        <Card className="p-5">
-          <IconTile icon={Clock} />
-          <h2 className="mt-4 text-[15px] font-bold text-black">
-            Jam operasional
-          </h2>
-          <p className="mt-1 text-sm text-neutral-600">
-            Senin–Jumat, 09.00–17.00 WIB
-          </p>
-          <p className="mt-1 text-sm text-neutral-500">
-            Laporan darurat (penipuan) diprioritaskan.
-          </p>
-        </Card>
-      </div>
+            <h2 id="kanal-judul" className="text-h3 text-fg">
+              Kanal kontak
+            </h2>
+            <DescriptionList
+              layout="stacked"
+              className="mt-6"
+              items={[
+                {
+                  key: "email",
+                  term: "Email",
+                  detail: (
+                    <>
+                      <a
+                        href={`mailto:${SUPPORT_EMAIL}`}
+                        className="inline-flex min-h-11 items-center text-h4 text-fg underline decoration-line-control decoration-1 underline-offset-4 hover:decoration-fg"
+                      >
+                        {SUPPORT_EMAIL}
+                      </a>
+                      <span className="block">Respons maksimal 1×24 jam kerja.</span>
+                      <CopyButton
+                        text={SUPPORT_EMAIL}
+                        label="Salin email"
+                        className="mt-4 min-h-11"
+                      />
+                    </>
+                  ),
+                },
+                {
+                  key: "jam",
+                  term: "Jam operasional",
+                  detail: "Senin–Jumat, 09.00–17.00 WIB",
+                },
+                {
+                  key: "darurat",
+                  term: "Laporan penipuan",
+                  detail: "Diprioritaskan sebagai laporan darurat.",
+                },
+                {
+                  key: "chat",
+                  term: (
+                    <span className="flex flex-wrap items-center gap-2">
+                      Live chat
+                      <Badge variant="outline">Segera hadir</Badge>
+                    </span>
+                  ),
+                  detail:
+                    "Kami sedang menyiapkan live chat langsung di aplikasi. Sementara itu, silakan hubungi kami via email di atas.",
+                },
+              ]}
+            />
+          </section>
 
-      <Alert variant="info" className="mt-6">
-        <span className="flex items-center gap-2 font-semibold">
-          <Icon icon={ChatCircleDots} size={18} />
-          Live chat segera hadir
-        </span>
-        <span className="mt-1 block">
-          Kami sedang menyiapkan live chat langsung di aplikasi. Sementara itu,
-          silakan hubungi kami via email di atas.
-        </span>
-      </Alert>
+          {/* Formulir */}
+          <div className="lg:sticky lg:top-24 lg:col-span-6 lg:col-start-7 lg:row-span-2 lg:row-start-1 lg:self-start">
+            <Card className="p-6 sm:p-8">
+              <h2 className="text-h3 text-fg">Kirim pesan</h2>
+              <p className="mt-2 text-small text-fg-muted sm:text-body">
+                Isi formulir di bawah — pesanmu akan diteruskan ke email layanan
+                pelanggan.
+              </p>
+              <div className="mt-6">
+                <ContactForm />
+              </div>
+            </Card>
+          </div>
 
-      <Card className="mt-6 p-5 sm:p-6">
-        <h2 className="text-[15px] font-bold text-black">Kirim pesan</h2>
-        <p className="mt-1 text-sm text-neutral-500">
-          Isi formulir di bawah — pesanmu akan diteruskan ke email layanan
-          pelanggan.
-        </p>
-        <div className="mt-4">
-          <ContactForm />
+          {/* Kelengkapan laporan */}
+          <section
+            aria-labelledby="sertakan-judul"
+            className="lg:col-span-5 lg:col-start-1 lg:row-start-2"
+          >
+            <h2 id="sertakan-judul" className="text-h3 text-fg">
+              Agar laporanmu cepat diproses
+            </h2>
+            <p className="mt-2 text-small text-fg-muted sm:text-body">
+              Sertakan informasi berikut di pesanmu:
+            </p>
+            <ol className="mt-6 border-t border-line">
+              {REPORT_CHECKLIST.map((item, i) => (
+                <li
+                  key={item}
+                  className="flex gap-4 border-b border-line py-4 text-small text-fg-muted sm:text-body"
+                >
+                  <span className="w-6 shrink-0 font-semibold tabular-nums text-fg">
+                    {i + 1}.
+                  </span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ol>
+          </section>
         </div>
-      </Card>
-
-      <Card className="mt-6 p-5">
-        <h2 className="text-[15px] font-bold text-black">
-          Agar laporanmu cepat diproses, sertakan:
-        </h2>
-        <ul className="mt-3 space-y-2 text-sm leading-relaxed text-neutral-600">
-          <li className="flex gap-2">
-            <span className="font-bold text-black">1.</span>
-            Username atau nomor HP terdaftar di akunmu.
-          </li>
-          <li className="flex gap-2">
-            <span className="font-bold text-black">2.</span>
-            Waktu kejadian (tanggal dan jam, bila ingat).
-          </li>
-          <li className="flex gap-2">
-            <span className="font-bold text-black">3.</span>
-            Screenshot chat, bukti pembayaran, atau foto barang terkait.
-          </li>
-          <li className="flex gap-2">
-            <span className="font-bold text-black">4.</span>
-            ID transaksi (ada di detail transaksi di aplikasi).
-          </li>
-          <li className="flex gap-2">
-            <span className="font-bold text-black">5.</span>
-            Kronologi singkat: apa yang terjadi, langkah demi langkah.
-          </li>
-        </ul>
-      </Card>
-    </div>
+      </Container>
+    </>
   );
 }
